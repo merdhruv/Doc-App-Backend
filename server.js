@@ -9,7 +9,7 @@ const UserRoute = require('./routes/Userroutes')
 const FileRoute = require('./routes/Userfileroutes')
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {useNewUrlParser: true});
+mongoose.connect(uri);
 const db = mongoose.connection
 
 db.on('error', (err) => {
