@@ -9,5 +9,6 @@ router.post('/adduser', UserController.adduser)
 router.post('/update', UserController.update)
 router.post('/delete', UserController.destroy)
 router.post('/login',  UserController.login)
+router.post('/age', UserController.changeField)
 
 module.exports = router

@@ -169,7 +169,42 @@ const destroy = (req, res) => {
         }+error)
     })
 }
+const changeField = (req, res) => {
+    const userId = req.body.userid;
+    const oldField = req.body.contact;
+    const newAge = req.body.age;
+
+    // Check if oldField exists in the request
+    if (!oldField) {
+        return res.status(400).json({
+            message: 'Old field not provided'
+        });
+    }
+
+    // Define the updateData with the new age
+    const updateData = { age: newAge };
+
+    // Update the document
+    User.findByIdAndUpdate(userId, { $unset: { [oldField]: 1 }, $set: updateData }, { new: true })
+        .then(updatedUser => {
+            if (!updatedUser) {
+                return res.status(404).json({
+                    message: 'User not found'
+                });
+            }
+            res.json({
+                message: 'Field updated successfully!',
+                updatedUser
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                message: 'An error occurred while updating field',
+                error: error.message
+            });
+        });
+};
 
 module.exports = {
-    index, show, adduser, update, destroy, login
+    index, show, adduser, update, destroy, login, changeField
 }
